@@ -125,12 +125,12 @@ class SSO
     $user->name = isset($details[env('SSO_NAME_ATTRIBUTE', 'name')]) ? $details[env('SSO_NAME_ATTRIBUTE', 'name')] : null;
     $user->level = isset($details[env('SSO_LEVEL_ATTRIBUTE', 'role')]) ? $details[env('SSO_LEVEL_ATTRIBUTE', 'role')] : null;
 
-    if (strtolower($user->role) == 'mahasiswa') {
+    if (strtolower($user->level) == 'mahasiswa') {
       $user->nim = isset($details[env('SSO_NIM_ATTRIBUTE', 'nim')]) ? $details[env('SSO_NIM_ATTRIBUTE', 'nim')] : null;
       $user->mail = isset($details[env('SSO_MAIL_ATTRIBUTE', 'mail')]) ? $details[env('SSO_MAIL_ATTRIBUTE', 'mail')] : null;
       $user->personal_mail = isset($details[env('SSO_PERSONAL_MAIL_ATTRIBUTE', 'personal_mail')]) ? $details[env('SSO_PERSONAL_MAIL_ATTRIBUTE', 'personal_mail')] : null;
     }
-    else if ($user->role === 'staff') {
+    else if ($user->level === 'staff') {
       $user->nip = isset($details['nip']) ? $details['nip'] : null;
     }
 
