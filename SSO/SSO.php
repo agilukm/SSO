@@ -39,17 +39,17 @@ use phpCAS;
 /**
  * CAS server host address
  */
-define('CAS_SERVER_HOST', 'sso.ui.ac.id');
+define('CAS_SERVER_HOST', env('CAS_SERVER_HOST', 'sso.ui.ac.id'));
 
 /**
  * CAS server uri
  */
-define('CAS_SERVER_URI', '/cas2');
+define('CAS_SERVER_URI', env('CAS_SERVER_URI', '/cas2'));
 
 /**
  * CAS server port
  */
-define('CAS_SERVER_PORT', 443);
+define('CAS_SERVER_PORT', env('CAS_SERVER_PORT', 443));
 
 // ------------------------------------------------------------------------
 //  CAS Initialization
