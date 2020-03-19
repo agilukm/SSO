@@ -1,5 +1,6 @@
 <?php
 /**
+ * Modified by https://github.com/agilukm for use .env for variable in config
  * SSO - Utility library for authentication with SSO-UI
  *
  * @author      Bobby Priambodo <bobby.priambodo@gmail.com>
@@ -116,24 +117,21 @@ class SSO
    */
   public static function getUser() {
     $details = phpCAS::getAttributes();
-
+    var_dump ($details); //
+    
     // Create new user object, initially empty.
     $user = new \stdClass();
     $user->username = phpCAS::getUser();
-    $user->name = $details['nama'];
-    $user->role = $details['peran_user'];
+    $user->name = isset($details[env('SSO_NAME_ATTRIBUTE', 'name')]) ? $details[env('SSO_NAME_ATTRIBUTE', 'name')] : null;
+    $user->level = isset($details[env('SSO_LEVEL_ATTRIBUTE', 'role')]) ? $details[env('SSO_LEVEL_ATTRIBUTE', 'role')] : null;
 
-    if ($user->role === 'mahasiswa') {
-      $user->npm = $details['npm'];
-      $user->org_code = $details['kd_org'];
-
-      $data = json_decode(file_get_contents( __DIR__ . '/additional-info.json'), true)[$user->org_code];
-      $user->faculty = $data['faculty'];
-      $user->study_program = $data['study_program'];
-      $user->educational_program = $data['educational_program'];
+    if (strtolower($user->role) == 'mahasiswa') {
+      $user->nim = isset($details[env('SSO_NIM_ATTRIBUTE', 'nim')]) ? $details[env('SSO_NIM_ATTRIBUTE', 'nim')] : null;
+      $user->mail = isset($details[env('SSO_MAIL_ATTRIBUTE', 'mail')]) ? $details[env('SSO_MAIL_ATTRIBUTE', 'mail')] : null;
+      $user->personal_mail = isset($details[env('SSO_PERSONAL_MAIL_ATTRIBUTE', 'personal_mail')]) ? $details[env('SSO_PERSONAL_MAIL_ATTRIBUTE', 'personal_mail')] : null;
     }
     else if ($user->role === 'staff') {
-      $user->nip = $details['nip'];
+      $user->nip = isset($details['nip']) ? $details['nip'] : null;
     }
 
     return $user;
