@@ -101,13 +101,13 @@ class SSO
   }
 
   /**
-   * Logout from SSO with URL redirection options
+   * Logout from SSO with URL redirection options. Example Array = ['url' => 'https://google.com', 'service' => 'https://google.com'];
    */
-  public static function logout($url='') {
-    if ($url === '')
+  public static function logout($params) {
+    if (!is_array($params))
       phpCAS::logout();
     else
-      phpCAS::logout(['url' => $url]);
+      phpCAS::logout($params);
   }
 
   /**
